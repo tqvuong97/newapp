@@ -134,25 +134,24 @@ nav:before {
   }
 
 }
-@import url('https://fonts.googleapis.com/css?family=Roboto:700');
 
 body {
-  margin:0;
-  font-family:'Roboto';
-  text-align:center;
+
+  font-family: 'Roboto', serif;
 }
 
 #container {
   color:#999;
   text-transform: uppercase;
   font-size:36px;
-  /*font-weight:bold;*/
-  /*padding-top:200px;*/
+  font-weight:bold;
+  //padding-top:200px;
   position:relative;
   width:100%;
-  bottom:45%;
+  //bottom:45%;
   display:block;
-  margin-top: 60px;
+  margin-top: 70px;
+  text-align: center;
 }
 
 #flip {
@@ -160,9 +159,10 @@ body {
   overflow:hidden;
   div div{
     color:#fff;
-    padding:4px 12px;
+    padding:6px 12px;
     height:45px;
     margin-bottom:45px;
+    margin-top:45px;
     display:inline-block;
     background:#42c58a;
   }

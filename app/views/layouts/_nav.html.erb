@@ -10,7 +10,7 @@
         <%=link_to "Home", root_path, class: "nav-link" %>
       </li>
       <li>
-        <a class="nav-link" href="#">Services</a>
+        <%=link_to "Micropost", microposts_path , class: "nav-link" %>
       </li>
       <li>
         <a class="nav-link" href="#">Team</a>
@@ -24,11 +24,21 @@
       <li>
         <a class="nav-link" href="#contact">Contact</a>
       </li>
-      <%= link_to('Login', "#", class: "nav-link") %>
-      </li>
-      <li>
-        <%= link_to('Register', "#", class: "nav-link") %>
-      </li>
+      <%if current_user %>
+        <li>
+          <%= link_to(current_user.email, user_path(session[:user_id]) , class: "nav-link") %>
+        </li>
+        <li>
+          <%= link_to 'Logout', logout_path , class: "nav-link" ,method: :delete %>
+        </li>
+      <%else %>
+        <li>
+          <%= link_to('Login', login_path, class: "nav-link") %>
+        </li>
+        <li>
+          <%= link_to('Register', new_user_path, class: "nav-link") %>
+        </li>
+      <%end %>
     </ul>
   </div>
 </nav>
