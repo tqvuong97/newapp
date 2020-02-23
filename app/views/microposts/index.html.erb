@@ -17,7 +17,7 @@
       <tr>
         <td><%= micropost.title %></td>
         <td><%= micropost.content %></td>
-<!--        <td><%#= micropost.user_id %></td>-->
+        <td><%= micropost.user.email %></td>
         <td><%= link_to 'Show', user_micropost_path(current_user.id,micropost) %></td>
         <td><%= link_to 'Edit', edit_user_micropost_path(current_user.id,micropost) %></td>
         <td><%= link_to 'Destroy', user_micropost_path(current_user.id,micropost.id), 'data-method' => :delete, data: { confirm: 'Are you sure?' } %></td>

@@ -1,11 +1,13 @@
 class MicropostsController < ApplicationController
   before_action :set_micropost, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!, reject: :index
+  before_action :check_owner_post, only:  [:edit, :update, :destroy]
+  before_action :authenticate_user!
   # GET /microposts
   # GET /microposts.json
   def index
-    @microposts = Micropost.where('user_id =?',current_user.id)
-    p @microposts
+    # @microposts = Micropost.where('user_id =?',current_user.id)
+
+    @microposts = Micropost.all
     # @microposts.user_id = current_user.id
   end
 
@@ -66,11 +68,15 @@ class MicropostsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_micropost
-      @micropost = Micropost.find(params[:id])
+      @micropost = Micropost.friendly.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def micropost_params
       params.require(:micropost).permit(:title,:content, :user_id)
     end
+
+  def check_owner_post
+    redirect_to microposts_path,notice: "no permit to edit" if @micropost.user_id != current_user.id
+  end
 end

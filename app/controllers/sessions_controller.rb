@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  before_action :check_login
+  before_action :check_login, except: :destroy
   def new
   end
 
@@ -16,7 +16,11 @@ class SessionsController < ApplicationController
   end
 
   def destroy
+    p "--------------------------"
+    p session[:user_id]
+    p "--------------------------"
     log_out
+    p "logooooooo"
     flash[:success] = "You are logged out"
     redirect_to login_path
   end

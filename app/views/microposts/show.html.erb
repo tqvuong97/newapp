@@ -1,5 +1,8 @@
 <p id="notice"><%= notice %></p>
-
+<p>
+  <strong>Title:</strong>
+  <%= @micropost.title %>
+</p>
 <p>
   <strong>Content:</strong>
   <%= @micropost.content %>
@@ -7,8 +10,8 @@
 
 <p>
   <strong>User:</strong>
-  <%= @micropost.user_id %>
+  <%= @micropost.user.email %>
 </p>
 
-<!--<%#= link_to 'Edit', edit_micropost_path(@micropost) %> |-->
-<%#= link_to 'Back', microposts_path %>
+<%= link_to 'Edit', edit_micropost_path(@micropost) %> |
+<%= link_to 'Back', microposts_path %>
