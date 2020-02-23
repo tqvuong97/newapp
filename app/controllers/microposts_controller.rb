@@ -32,7 +32,7 @@ class MicropostsController < ApplicationController
     @micropost.user_id = current_user.id
     respond_to do |format|
       if @micropost.save
-        format.html { redirect_to user_micropost_path(@micropost,current_user.id), notice: 'Micropost was successfully created.' }
+        format.html { redirect_to user_micropost_path(current_user.id,@micropost), notice: 'Micropost was successfully created.' }
         format.json { render :show, status: :created, location: @micropost }
       else
         format.html { render :new }

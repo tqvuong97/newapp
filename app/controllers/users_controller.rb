@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :auth_user, only: [:show, :edit, :update, :destroy]
   include BCrypt
   # GET /users
   # GET /users.json
@@ -80,5 +81,8 @@ class UsersController < ApplicationController
     # Only allow a list of trusted parameters through.
     def user_params
       params.require(:user).permit(:name, :email, :password)
+    end
+    def auth_user
+      redirect_to root_path if current_user.id != @user.id
     end
 end

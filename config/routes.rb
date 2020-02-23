@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   get     "login" => "sessions#new"
   post    "login"    => "sessions#create"
   delete  "logout"   => "sessions#destroy"
-  resources :users do
+  resources :users,except: :index do
     resources :microposts
   end
   # get 'microposts', controller: "microposts",action: :index
