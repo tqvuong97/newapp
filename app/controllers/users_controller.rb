@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :auth_user, only: [:show, :edit, :update, :destroy]
+  before_action :auth_user, only: [ :show,:edit, :update, :destroy]
   include BCrypt
   # GET /users
   # GET /users.json
@@ -30,7 +30,7 @@ class UsersController < ApplicationController
     @user.password = hashed_password
     respond_to do |format|
       if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
+        format.html { redirect_to login_path, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new }
@@ -83,6 +83,6 @@ class UsersController < ApplicationController
       params.require(:user).permit(:name, :email, :password)
     end
     def auth_user
-      redirect_to root_path if current_user.id != @user.id
+      redirect_to root_path if current_user.nil? or current_user.id != @user.id
     end
 end

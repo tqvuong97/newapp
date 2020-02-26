@@ -28,7 +28,9 @@ th {
   padding-bottom: 5px; }
 
 td {
-  padding: 0 5px 7px; }
+  padding: 0 5px 7px;
+  word-break: normal;
+}
 
 div.field,
 div.actions {
@@ -64,3 +66,4 @@ div.actions {
 
 label {
   display: block; }
+

@@ -5,10 +5,15 @@ class MicropostsController < ApplicationController
   # GET /microposts
   # GET /microposts.json
   def index
-    # @microposts = Micropost.where('user_id =?',current_user.id)
-
-    @microposts = Micropost.all
-    # @microposts.user_id = current_user.id
+    if params[:search]
+      @microposts = Micropost.all if params[:search].blank?
+      @microposts = Micropost.where('content ILIKE ?',"%#{params[:search]}%") if params[:content]
+      @microposts = Micropost.where('title ILIKE ?',"%#{params[:search]}%") if params[:title]
+      @microposts = Micropost.where('title ILIKE ? or content ILIKE ?',"%#{params[:search]}%","%#{params[:search]}%") if params[:or]
+      @microposts = Micropost.where('title ILIKE ? and content ILIKE ?',"%#{params[:search]}%","%#{params[:search]}%") if params[:and]
+    else
+      @microposts = Micropost.all
+    end
   end
 
   # GET /microposts/1

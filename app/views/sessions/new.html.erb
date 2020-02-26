@@ -1,7 +1,5 @@
 <div class="container">
-  <div class="row">
-    <h1 class="title">Login</h1>
-  </div>
+  <h1 class="title">Login</h1>
   <div class="row">
     <div class="col-lg-offset-3 col-lg-6">
       <%= form_for :session, url: login_path do |f| %>
@@ -17,8 +15,8 @@
         <div class="text-center">
           <%= f.submit "Login", class: "btn btn-info col-lg-12" %>
         </div>
-
       <% end %>
+      <%=link_to "Create an account", new_user_path %>
     </div>
   </div>
 </div>

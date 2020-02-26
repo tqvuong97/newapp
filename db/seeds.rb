@@ -5,4 +5,9 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-User.create(name: "Vuong", email: "vuong@gmail.com", password: "123456")
+# User.create(name: "Vuong", email: "vuong@gmail.com", password: "123456")
+20.times {
+  Micropost.create(title: Faker::Lorem.sentence(word_count: 3, supplemental: true, random_words_to_add: 4),
+                   content: Faker::Lorem.paragraph(sentence_count: 2),
+                   user_id: 2)
+}
