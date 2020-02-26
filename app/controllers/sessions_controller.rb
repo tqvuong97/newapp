@@ -6,23 +6,16 @@ class SessionsController < ApplicationController
   def create
     user = User.find_by email: params[:session][:email].downcase
     if user && BCrypt::Password.new(user.password) == params[:password]
-      flash[:success] = "Welcome to our website"
       log_in user
-      redirect_to root_path
+      redirect_to root_path,notice: "Welcome to our website"
     else
-      flash[:danger] = "Invalid account"
-      redirect_to login_path
+      redirect_to login_path, notice: "Invalid account"
     end
   end
 
   def destroy
-    p "--------------------------"
-    p session[:user_id]
-    p "--------------------------"
     log_out
-    p "logooooooo"
-    flash[:success] = "You are logged out"
-    redirect_to login_path
+    redirect_to login_path,notice: "You are logged out"
   end
 
   private

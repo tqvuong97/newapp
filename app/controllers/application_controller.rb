@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   end
   helper_method :current_user
   def authenticate_user!
-    redirect_to '/login' unless current_user
+    redirect_to '/login',notice: "Please login before accessing" unless current_user
   end
   def record_not_found
     render file: "#{Rails.root}/public/404", layout: true, status: :not_found
