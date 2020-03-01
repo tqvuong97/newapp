@@ -16,11 +16,11 @@ namespace :user do
     }
   end
 
-  task create_micro_5000: :environment do
+  task :create_micro_5000, [:user_id] => [:environment] do |_,args|
     columns = [ :title, :content, :user_id, :category_id ]
     values = []
     5000.times do
-      values << [Faker::Lorem.sentence, Faker::Lorem.paragraph,8,Random.rand(1..6)]
+      values << [Faker::Lorem.sentence, Faker::Lorem.paragraph,args[:user_id],Random.rand(1..6)]
     end
     Micropost.import columns, values
   end
