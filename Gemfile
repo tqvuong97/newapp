@@ -56,3 +56,6 @@ gem 'uglifier'
 gem 'jquery-rails'
 gem 'friendly_id'
 gem 'faker'
+gem 'kaminari'
+gem 'filterrific'
+gem "activerecord-import"

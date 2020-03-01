@@ -10,10 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_23_141535) do
+ActiveRecord::Schema.define(version: 2020_02_28_150910) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string "slug", null: false
@@ -33,6 +39,8 @@ ActiveRecord::Schema.define(version: 2020_02_23_141535) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "title"
     t.string "slug"
+    t.bigint "category_id"
+    t.index ["category_id"], name: "index_microposts_on_category_id"
     t.index ["slug"], name: "index_microposts_on_slug", unique: true
   end
 
@@ -44,4 +52,5 @@ ActiveRecord::Schema.define(version: 2020_02_23_141535) do
     t.string "password"
   end
 
+  add_foreign_key "microposts", "categories"
 end

@@ -5,12 +5,21 @@ class MicropostsController < ApplicationController
   # GET /microposts
   # GET /microposts.json
   def index
-    @microposts = Micropost.all
-    if params[:search]
-      @microposts = Micropost.where('title ILIKE ? or content ILIKE ?',"%#{params[:search]}%","%#{params[:search]}%") if params[:or] or params[:search]
-      @microposts = Micropost.where('title ILIKE ? and content ILIKE ?',"%#{params[:search]}%","%#{params[:search]}%") if params[:and]
-      @microposts = Micropost.where('content ILIKE ?',"%#{params[:search]}%") if params[:content]
-      @microposts = Micropost.where('title ILIKE ?',"%#{params[:search]}%") if params[:title]
+    (@filterrific = initialize_filterrific(
+        Micropost,
+        params[:filterrific],
+        select_options: {
+            sorted_by: Micropost.options_for_sorted_by,
+            with_category_id: Category.options_for_select,
+        },
+        persistence_id: 'shared_key',
+        sanitize_params: true,
+        )) or return
+    @microposts = @filterrific.find.page(params[:page])
+
+    respond_to do |format|
+      format.html
+      format.js
     end
   end
 
@@ -76,7 +85,7 @@ class MicropostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def micropost_params
-      params.require(:micropost).permit(:title,:content, :user_id)
+      params.require(:micropost).permit(:title,:content, :user_id,:category_id)
     end
 
   def check_owner_post
