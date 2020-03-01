@@ -26,7 +26,7 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
-    hashed_password = BCrypt::Password.create(params[:password])
+    hashed_password = BCrypt::Password.create(@user.password)
     @user.password = hashed_password
     respond_to do |format|
       if @user.save
@@ -61,15 +61,6 @@ class UsersController < ApplicationController
       format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
       format.json { head :no_content }
     end
-  end
-
-  def password
-    @password ||= Password.new(password_hash)
-  end
-
-  def password=(new_password)
-    @password = Password.create(new_password)
-    self.password_hash = @password
   end
 
   private
