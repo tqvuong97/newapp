@@ -28,6 +28,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     hashed_password = BCrypt::Password.create(@user.password)
     @user.password = hashed_password
+    @user.role = "admin"
     respond_to do |format|
       if @user.save
         format.html { redirect_to login_path, notice: 'User was successfully created.' }
@@ -71,7 +72,7 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:name, :email, :password)
+      params.require(:user).permit(:name, :email, :password, :avatar, :role)
     end
     def auth_user
       redirect_to root_path if current_user.nil? or current_user.id != @user.id

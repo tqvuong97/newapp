@@ -1,0 +1,5 @@
+<div>  <b><%= comment.user.name %></b> | <%= distance_of_time_in_words(Time.now.to_i,comment.created_at.to_i)%>
+  <br><%= comment.body %><br>
+  <%= link_to 'Delete', [comment.micropost, comment], method: :delete, data: { confirm: 'Are you sure?' } %>
+</div>
+<br>

@@ -1,6 +1,7 @@
 class CategoriesController < ApplicationController
   before_action :set_category, only: [:show, :edit, :update, :destroy]
-
+  before_action :authen_edit_cat, only:  [:edit, :update, :destroy]
+  before_action :authenticate_user!
   # GET /categories
   # GET /categories.json
   def index
@@ -71,4 +72,8 @@ class CategoriesController < ApplicationController
     def category_params
       params.require(:category).permit(:name)
     end
+
+  def authen_edit_cat
+    redirect_to categories_path,notice: "no permit to edit" if !current_user.admin?
+  end
 end
