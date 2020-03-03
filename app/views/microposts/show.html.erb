@@ -10,11 +10,16 @@
   <strong>Category:</strong>
   <%= @micropost.category.name %>
 </p>
-
 <p>
   <strong>User:</strong>
   <%= @micropost.user.email %>
 </p>
+<hr>
+<h2>Comments</h2>
+<%= render @micropost.comments.order(created_at: :desc) %>
+<hr>
+<h4>Add a Comment</h4>
+<%= render 'comments/comment_form', comment: @comment %>
 
 <%= link_to 'Edit', edit_micropost_path(@micropost) %> |
 <%= link_to 'Back', microposts_path %>

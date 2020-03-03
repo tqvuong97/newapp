@@ -59,3 +59,4 @@ gem 'faker'
 gem 'kaminari'
 gem 'filterrific'
 gem "activerecord-import"
+gem 'image_processing'

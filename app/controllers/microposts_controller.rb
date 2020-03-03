@@ -26,6 +26,8 @@ class MicropostsController < ApplicationController
   # GET /microposts/1
   # GET /microposts/1.json
   def show
+    @comment = Comment.new
+    @comment = @micropost.comments
   end
 
   # GET /microposts/new

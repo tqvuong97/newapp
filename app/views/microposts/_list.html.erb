@@ -15,8 +15,6 @@
     <tr>
       <th><%= filterrific_sorting_link(@filterrific, :title) %></th>
       <th>Content</th>
-      <th>Category</th>
-      <th>User</th>
       <th><%= filterrific_sorting_link(@filterrific, :created_at) %></th>
       <th colspan="3"></th>
     </tr>
@@ -24,12 +22,17 @@
     <tbody>
     <% microposts.each do |micropost| %>
       <tr>
-        <td><%= micropost.title %></td>
+        <td>
+          <%= link_to micropost.title, user_micropost_path(current_user.id,micropost) %>
+          <span class="badge"><%=micropost.comments.count %></span>
+          <br>
+          <span class="category">
+            <%= micropost.category.name %> |
+            <%= micropost.user.email %>
+          </span>
+        </td>
         <td><%= micropost.content %></td>
-        <td><%= micropost.category.name %></td>
-        <td><%= micropost.user.email %></td>
-        <td><%= micropost.created_at %></td>
-        <td><%= link_to 'Show', user_micropost_path(current_user.id,micropost),class: "btn btn-info" %></td>
+        <td><%= micropost.created_at.strftime("%d/%m/%Y") %></td>
         <td><%= link_to 'Edit', edit_user_micropost_path(current_user.id,micropost),class: "btn btn-success" %></td>
         <td><%= link_to 'Destroy', user_micropost_path(current_user.id,micropost.id),class: "btn btn-danger", 'data-method' => :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>

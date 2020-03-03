@@ -2,9 +2,11 @@ class Micropost < ApplicationRecord
   extend FriendlyId
   friendly_id :title, use: :slugged
   belongs_to :user
+  has_many :comments, :dependent => :destroy
   validates :title, length: { minimum: 10 }
   paginates_per 5
   belongs_to :category
+  has_rich_text :content
 
   filterrific :default_filter_params => { :sorted_by => 'created_at_asc' },
               :available_filters => [:sorted_by, :search_query, :with_category_id]
@@ -16,10 +18,10 @@ class Micropost < ApplicationRecord
     terms = terms.map { |e|
       (e.gsub('*', '%') + '%').gsub(/%+/, '%').prepend('%')
     }
-    num_or_conds = 2
+    num_or_conds = 3
     where(
         terms.map { |_term|
-          "(LOWER(microposts.title) ILIKE ? OR LOWER(microposts.content) ILIKE ?)"
+          "(LOWER(microposts.title) ILIKE ? OR LOWER(microposts.content) ILIKE ? or (id in (select record_id from action_text_rich_texts where name ilike '%content%' and body ilike ?))) "
         }.join(' AND '),
         *terms.map { |e| [e] * num_or_conds }.flatten,
     )
