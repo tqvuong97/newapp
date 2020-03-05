@@ -11,10 +11,14 @@
 </p>
 
 
+<!--<p>-->
+<!--  <strong>Avatar:</strong>-->
+  <%#= image_tag @user.avatar, size: "300x100" if @user.avatar.attached? %>
+<!--</p>-->
 <p>
-  <strong>Avatar:</strong>
-  <%= image_tag @user.avatar, size: "300x100" if @user.avatar.attached? %>
+  <%= gravatar_for @user %>
 </p>
+
 
 
 

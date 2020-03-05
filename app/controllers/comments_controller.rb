@@ -1,8 +1,11 @@
+# frozen_string_literal: true
+
 class CommentsController < ApplicationController
   before_action :authen_comment, only: :destroy
   def new
     @comment = Comment.new
   end
+
   def create
     @micropost = Micropost.friendly.find(params[:micropost_id])
     @comment = @micropost.comments.new(comment_params)
@@ -17,14 +20,11 @@ class CommentsController < ApplicationController
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
     end
-
   end
 
-  def show
-  end
+  def show; end
 
-  def update
-  end
+  def update; end
 
   def destroy
     @comment = Comment.find(params[:id])
@@ -33,12 +33,15 @@ class CommentsController < ApplicationController
   end
 
   private
+
   def comment_params
-    params.require(:comment).permit(:user_id,:micropost_id,:body)
-  end
-  def authen_comment
-    @comment = Comment.find(params[:id])
-    redirect_to @comment.micropost, notice: "You cannot delete this comment" if @comment.user != current_user
+    params.require(:comment).permit(:user_id, :micropost_id, :body)
   end
 
+  def authen_comment
+    @comment = Comment.find(params[:id])
+    if @comment.user != current_user
+      redirect_to @comment.micropost, notice: 'You cannot delete this comment'
+    end
+  end
 end

@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class CategoriesController < ApplicationController
-  before_action :set_category, only: [:show, :edit, :update, :destroy]
-  before_action :authen_edit_cat, only:  [:edit, :update, :destroy]
+  before_action :set_category, only: %i[show edit update destroy]
+  before_action :authen_edit_cat, only: %i[edit update destroy]
   before_action :authenticate_user!
   # GET /categories
   # GET /categories.json
@@ -10,8 +12,7 @@ class CategoriesController < ApplicationController
 
   # GET /categories/1
   # GET /categories/1.json
-  def show
-  end
+  def show; end
 
   # GET /categories/new
   def new
@@ -19,8 +20,7 @@ class CategoriesController < ApplicationController
   end
 
   # GET /categories/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /categories
   # POST /categories.json
@@ -63,17 +63,20 @@ class CategoriesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_category
-      @category = Category.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def category_params
-      params.require(:category).permit(:name)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_category
+    @category = Category.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def category_params
+    params.require(:category).permit(:name)
+  end
 
   def authen_edit_cat
-    redirect_to categories_path,notice: "no permit to edit" if !current_user.admin?
+    unless current_user.admin?
+      redirect_to categories_path, notice: 'no permit to edit'
+    end
   end
 end
